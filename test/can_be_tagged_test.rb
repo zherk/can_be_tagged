@@ -1,8 +1,7 @@
 require 'test_helper'
 
 class CanBeTaggedTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  test "truth" do
+    assert_kind_of Module, CanBeTagged
   end
 end
