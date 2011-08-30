@@ -11,8 +11,7 @@ module CanBeTagged
     module ClassMethods
       def can_be_tagged(options = {})
         has_many :tags, :through => :tag_lines
- #       has_many :tag_lines, :as => :taggable, :include => :tag        
-
+        has_many :tag_lines, :as => :taggable, :include => :tag       
       end
     end
     

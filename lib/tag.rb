@@ -1,5 +1,6 @@
 class Tag < ActiveRecord::Base
   has_many :tag_lines, :dependent => :destroy
+  has_many :taggables, :through => :tag_lines
 
   cattr_accessor :delimiter
   self.delimiter = ','
