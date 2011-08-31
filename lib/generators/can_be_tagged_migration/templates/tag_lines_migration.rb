@@ -3,7 +3,7 @@ class CreateTagLines < ActiveRecord::Migration
     create_table :tag_lines do |t|
       t.integer :tag_id
       t.integer :taggable_id
-      t.string  :tagged_type
+      t.string  :taggable_type
 
       t.timestamps
     end

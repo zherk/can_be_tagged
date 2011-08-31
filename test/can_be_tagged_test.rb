@@ -10,10 +10,11 @@ class CanBeTaggedTest < ActiveSupport::TestCase
   test "create_model_with_tag" do
     news = News.new
     news.title = "test1"
-    news.tags_listing = "lay, yellow"
+    news.tags_listing = "lay, yellow"    
     news.save
     
     news = News.find_by_title "test1"
+    puts news.tags
     assert_equal "lay, yellow", news.tags_listing
   end
 end

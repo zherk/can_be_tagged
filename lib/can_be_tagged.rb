@@ -17,7 +17,11 @@ module CanBeTagged
 
     module InstanceMethods    
       def tags_listing=(tags_listing)
-        write_attribute :tags, Tag.create_from_listing(tags_listing)
+        tags_list = Tag.create_from_listing(tags_listing)                
+        tags_list.each do |tag|
+          tags << tag
+        end
+        write_attribute :tags, tags
       end
       
       def tags_listing
