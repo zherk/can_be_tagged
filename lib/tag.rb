@@ -5,12 +5,11 @@ class Tag < ActiveRecord::Base
   cattr_accessor :delimiter
   self.delimiter = ','
   
-  def self.create_from_listing(listing)
-
+  def self.create_from_listing(listing)  
     tags_names = listing.split(delimiter)
     tags_list = Array.new
     tags_names.each do |tag_name|
-      tags_list << Tag.new(:name => tag_name)
+      tags_list << Tag.find_or_create_by_name(tag_name)
     end
     tags_list
   end
