@@ -21,12 +21,10 @@ module CanBeTagged
         tags_list.each do |tag|
           tags << tag
         end
-        write_attribute :tags, tags
       end
       
       def tags_listing
-        tags= read_attribute :tags
-        tags ? tags.map(&:name).join(',') : ""
+        tags ? tags.map(&:name).join(', ') : ""
       end
     end
   end
