@@ -1,5 +1,6 @@
 require 'tag'
 require 'tag_line'
+require 'tags_helper'
 
 module CanBeTagged
   module Taggable  
@@ -12,21 +13,30 @@ module CanBeTagged
       def can_be_tagged(options = {})
         has_many :tags, :through => :tag_lines
         has_many :tag_lines, :as => :taggable, :include => :tag       
+
+        scope :tagged_as, lambda {|tag_name|
+          joins(:tags).where(:"tags.name" => tag_name)
+        }
       end
     end
 
     module InstanceMethods    
-      def tags_listing=(tags_listing)
-        tags_list = Tag.create_from_listing(tags_listing)                
-        tags_list.each do |tag|
-          tags << tag
-        end
+      def add_tag(tag_name)
+        tags << Tag.find_or_create_by_name(tag_name.strip)
       end
-      
-      def tags_listing
-        tags ? tags.map(&:name).join(', ') : ""
+    end
+  end
+  
+  module TaggableController
+    def from_tags_listing(tags_listing)
+      tags_names = tags_listing.split(TagsHelper::DELIMITER.strip)
+      tags_list = Array.new
+      tags_names.each do |tag_name|
+        tags_list << Tag.new(:name => tag_name.strip)
       end
+      tags_list
     end
   end
 end
 ActiveRecord::Base.send :include, CanBeTagged::Taggable
+ActiveRecord::Base.send :include, CanBeTagged::TaggableController
