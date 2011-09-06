@@ -17,12 +17,24 @@ module CanBeTagged
         scope :tagged_as, lambda {|tag_name|
           joins(:tags).where(:"tags.name" => tag_name)
         }
+
+        before_save :avoid_duplicated_tags, :unless => lambda{tags.blank?}
+
       end
     end
 
     module InstanceMethods    
       def add_tag(tag_name)
         tags << Tag.find_or_create_by_name(tag_name.strip)
+      end
+
+      def avoid_duplicated_tags
+        new_list = Array.new
+        tags.each do |tag|
+          tag = Tag.find_or_create_by_name(tag.name) unless tag.id.blank?       
+          new_list << tag
+        end
+        tags << new_list
       end
     end
   end
