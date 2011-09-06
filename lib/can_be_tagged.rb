@@ -39,4 +39,4 @@ module CanBeTagged
   end
 end
 ActiveRecord::Base.send :include, CanBeTagged::Taggable
-ActiveRecord::Base.send :include, CanBeTagged::TaggableController
+ActionController::Base.send :include, CanBeTagged::TaggableController
