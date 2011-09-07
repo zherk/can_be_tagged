@@ -54,4 +54,20 @@ class CanBeTaggedTest < ActiveSupport::TestCase
     assert_equal 1, News.tagged_as("lay").count
   end
 
+  test "update_model_tags" do
+    news = News.new
+    news.title = "test1"
+    tags = from_tags_listing("lay, yellow")
+    news.tags = tags
+    news.save
+   
+    news = News.find_by_title "test1"
+    tags = from_tags_listing("truth, yellow")
+   
+    news.tags = tags
+   
+    news.save
+    assert_equal 2, news.tags.count
+    assert_equal "yellow, truth", to_tags_listing(news.tags)    
+  end
 end
