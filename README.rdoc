@@ -1,3 +1,10 @@
 = CanBeTagged
 
-This project rocks and uses MIT-LICENSE..
+Install: Add gem 'can_be_tagged', :git => 'git://github.com/zherk/can_be_tagged.git' to your Gemfile
+Test: 
+	cd test/dummy
+	rake db:create
+	rake db:migrate
+	cd ..
+	cd ..
+	rake test

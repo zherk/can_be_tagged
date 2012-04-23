@@ -19,12 +19,11 @@ module CanBeTagged
         }
       end
     end
-
-    module InstanceMethods    
-      def add_tag(tag_name)
-        tags << Tag.find_or_create_by_name(tag_name.strip)
-      end
+     
+    def add_tag(tag_name)
+      tags << Tag.find_or_create_by_name(tag_name.strip)
     end
+    
   end
   
   module TaggableController
