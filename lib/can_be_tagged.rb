@@ -28,10 +28,12 @@ module CanBeTagged
   
   module TaggableController
     def from_tags_listing(tags_listing)
-      tags_names = tags_listing.split(TagsHelper::DELIMITER.strip)
       tags_list = Array.new
-      tags_names.each do |tag_name|
-        tags_list <<  Tag.find_or_initialize_by_name(tag_name.strip)
+      if tags_listing
+        tags_names = tags_listing.split(TagsHelper::DELIMITER.strip)        
+        tags_names.each do |tag_name|
+          tags_list <<  Tag.find_or_initialize_by_name(tag_name.strip)
+        end
       end
       tags_list
     end
