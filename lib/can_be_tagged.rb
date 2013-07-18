@@ -11,9 +11,8 @@ module CanBeTagged
     
     module ClassMethods
       def can_be_tagged(options = {})
-        has_many :tags, :through => :tag_lines, :uniq => true
-        has_many :tag_lines, :as => :taggable, :include => :tag       
-
+        has_many :tags, -> {uniq}, :through => :tag_lines
+        has_many :tag_lines, as: :taggable
         scope :tagged_as, lambda {|tag_name|
           joins(:tags).where(:"tags.name" => tag_name)
         }
@@ -21,7 +20,7 @@ module CanBeTagged
     end
      
     def add_tag(tag_name)
-      tags << Tag.find_or_create_by_name(tag_name.strip)
+      tags << Tag.find_or_create_by(name: tag_name.strip)
     end
     
   end
@@ -32,7 +31,7 @@ module CanBeTagged
       if tags_listing
         tags_names = tags_listing.split(TagsHelper::DELIMITER.strip)        
         tags_names.each do |tag_name|
-          tags_list <<  Tag.find_or_initialize_by_name(tag_name.strip)
+          tags_list <<  Tag.find_or_initialize_by(name: tag_name.strip)
         end
       end
       tags_list
