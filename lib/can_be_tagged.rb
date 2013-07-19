@@ -11,6 +11,7 @@ module CanBeTagged
     
     module ClassMethods
       def can_be_tagged(options = {})
+        default_scope includes(:tags)
         has_many :tags, -> {uniq}, :through => :tag_lines
         has_many :tag_lines, as: :taggable
         scope :tagged_as, lambda {|tag_name|
