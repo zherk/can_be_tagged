@@ -37,7 +37,7 @@ class CanBeTaggedTest < ActiveSupport::TestCase
     assert_equal 1, News.tagged_as("lay").count
     assert_equal 1, Comment.tagged_as("lay").count
 
-    assert_equal 1, Tag.find_all_by_name("lay").count
+    assert_equal 1, Tag.where(name: "lay").count
   end
 
   test "create_model_with_tag_using_listing" do
